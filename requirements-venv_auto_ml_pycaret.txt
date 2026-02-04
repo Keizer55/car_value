@@ -1,4 +1,4 @@
-﻿annotated-types==0.7.0
+annotated-types==0.7.0
 ansi2html==1.9.2
 aplr==10.20.1
 asttokens==3.0.1
@@ -147,7 +147,7 @@ urllib3==2.6.2
 visions==0.8.1
 waitress==3.0.2
 wcwidth==0.2.14
-Werkzeug==3.0.6
+Werkzeug==3.1.5
 widgetsnbextension==4.0.15
 wordcloud==1.9.5
 WTForms==3.2.1
