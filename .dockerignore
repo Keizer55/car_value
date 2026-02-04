@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pdb
+*.egg-info/
+
+# Virtual environments (never ship in Docker builds)
+.venv/
+venv/
+venv_*/
+venv_app/
+venv_auto_model/
+venv_pycaret/
+
+# Data / artifacts
+data/raw/
+data/processed/*
+!data/processed/df_auto_filters.pkl
+
+# Development-only folders
+logs/
+notebooks/
+images/
+
+# Exclude older model snapshots
+models/2026-01-06/
+
+# Git
+.git/
+.gitignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
