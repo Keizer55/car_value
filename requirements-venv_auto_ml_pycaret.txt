@@ -119,7 +119,7 @@ rpds-py==0.30.0
 SALib==1.5.1
 schemdraw==0.15
 scikit-base==0.7.8
-scikit-learn==1.4.2
+scikit-learn==1.5.0
 scikit-plot==0.3.7
 scipy==1.11.4
 seaborn==0.13.2
