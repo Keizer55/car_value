@@ -1,4 +1,4 @@
-﻿annotated-types==0.7.0
+annotated-types==0.7.0
 ansi2html==1.9.2
 aplr==10.20.1
 asttokens==3.0.1
@@ -119,7 +119,7 @@ rpds-py==0.30.0
 SALib==1.5.1
 schemdraw==0.15
 scikit-base==0.7.8
-scikit-learn==1.4.2
+scikit-learn==1.5.0
 scikit-plot==0.3.7
 scipy==1.11.4
 seaborn==0.13.2
@@ -143,11 +143,11 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.3
 umap-learn==0.5.7
-urllib3==2.6.2
+urllib3==2.6.3
 visions==0.8.1
 waitress==3.0.2
 wcwidth==0.2.14
-Werkzeug==3.0.6
+Werkzeug==3.1.5
 widgetsnbextension==4.0.15
 wordcloud==1.9.5
 WTForms==3.2.1
