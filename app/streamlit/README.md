@@ -128,38 +128,48 @@ If `CLARITY_PROJECT_ID` is not set, Clarity tracking is disabled.
 
 ### Cookie Consent
 
-The app includes a **cookie consent modal popup** to comply with GDPR/CCPA regulations.
+The app includes a **native Streamlit dialog** for cookie consent (GDPR/CCPA compliance).
 
 **Configuration** (in `config.py`):
-- `ENABLE_COOKIE_CONSENT = True` (default): Shows consent modal, only loads analytics if user accepts
-- `ENABLE_COOKIE_CONSENT = False`: No consent modal, analytics loads automatically
+- `ENABLE_COOKIE_CONSENT = True` (default): Shows consent dialog using `@st.dialog`
+- `ENABLE_COOKIE_CONSENT = False`: No consent dialog, analytics loads automatically
 
 **User Experience:**
-- Modal popup appears centered on screen on first visit
-- Full-screen overlay with backdrop blur
-- User can Accept or Decline cookies
-- Choice applies for the session (stored in `st.session_state`)
-- Analytics (Clarity) only loads if user accepts
-- Smooth animations and modern UI
+- Native Streamlit dialog (clean, no iframes!)
+- Appears on first visit
+- Accept/Decline buttons
+- Choice stored in `st.session_state` for the session
+- Analytics only loads if user accepts
 
 **Implementation:**
-- Consent logic: `utils/cookie_consent.py`
-- Modal styling: Centered card with gradient background
-- Privacy link: Points to Microsoft's privacy statement
+- Uses Streamlit's native `@st.dialog` decorator (available in Streamlit 1.31+)
+- No custom HTML/JavaScript - pure Streamlit components
+- Better security, no iframe warnings
+- Consistent with Streamlit UI patterns
 
 ## Browser Console Warnings
 
-You may see Feature Policy warnings in the browser's developer console. These are **normal and safe**. 
+You may see Feature Policy and theme warnings in the browser's developer console. **99% are normal and safe**. 
 
-See [BROWSER_WARNINGS.md](./BROWSER_WARNINGS.md) for a detailed explanation of why these warnings appear and which ones can be addressed.
+See [BROWSER_WARNINGS.md](./BROWSER_WARNINGS.md) for a comprehensive explanation.
 
-**Quick Summary:**
-- ✅ These are informational browser security messages
-- ✅ They don't affect functionality or end users
-- ✅ Font preload warning has been fixed
-- ℹ️ Set `ENABLE_ANALYTICS = False` in `config.py` to reduce some warnings (disables Clarity)
+**TL;DR:**
+- ✅ **Fixed**: Font preload, iframe sandbox warnings  
+- ⚠️ **Cannot fix**: Feature Policy warnings (browser security - working correctly)
+- ⚠️ **Cannot fix**: Theme color warnings (internal Streamlit framework checks)
+- ✅ **Optional**: Set `ENABLE_ANALYTICS = False` to reduce some warnings
 
-### Cookie Consent
+### What Was Fixed:
 
-When analytics is enabled, a modern modal popup appears on first visit to obtain user consent for cookies and analytics tracking (GDPR/CCPA compliance).
+1. **Font Loading**: Added proper preload hints for custom fonts
+2. **Cookie Consent**: Switched from custom HTML iframe to Streamlit's native `@st.dialog`
+3. **JavaScript Errors**: Eliminated by removing custom modal implementation
+
+### What Remains (And Why):
+
+**Feature Policy Warnings:** Browser-level security messages from Streamlit's internal components and analytics iframes. These are **expected and correct** - they indicate security is working.
+
+**Theme Warnings:** Internal Streamlit framework checks for properties not exposed in the public API. No user-facing fix exists.
+
+**Impact:** ✅ None - these warnings don't affect functionality or end users.
 

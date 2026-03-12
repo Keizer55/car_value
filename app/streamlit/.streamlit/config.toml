@@ -3,4 +3,6 @@ primaryColor = "#FF4B4B"
 backgroundColor = "#0E1117"
 secondaryBackgroundColor = "#262730"
 textColor = "#FFFFFF"
+# Additional theme properties to avoid warnings
+font = "sans serif"
 
