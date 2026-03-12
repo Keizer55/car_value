@@ -14,6 +14,10 @@ def inject_sidebar_styles() -> None:
     """
     st.markdown("""
         <style>
+        section[data-testid="stSidebar"] {
+            background-color: #f8f9fa !important; /* Default widget background color */
+            border-color: #dee2e6 !important; /* Default widget border color */
+        }
         /* Explicitly set Filters heading and nav items to the same size so they match */
         section[data-testid="stSidebar"] h2 {
             font-size: 1.25rem !important;

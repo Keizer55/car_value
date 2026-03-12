@@ -16,6 +16,10 @@ def render_sidebar_filters(opts: Dict[str, Any], modify_display_name, create_dis
     Returns:
         Dictionary with all selected filter values
     """
+    # Inject sidebar styles
+    from utils.ui_theme import inject_sidebar_styles
+    inject_sidebar_styles()
+
     # Render a consistent sidebar heading using the theme helper
     sidebar_heading("Filters 🚗🚙🚕🚓🏎️🚐")
     
