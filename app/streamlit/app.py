@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.ui_theme import set_page_meta, inject_sidebar_styles, inject_play_font, inject_metric_styles
 from utils.analytics import inject_microsoft_clarity
+from utils.cookie_consent import show_cookie_banner
 
 # Set page metadata and inject shared UI styles before pages render
 set_page_meta("Car Value Predictor", icon="app/streamlit/assets/icons/favicon.ico")
@@ -8,7 +9,11 @@ set_page_meta("Car Value Predictor", icon="app/streamlit/assets/icons/favicon.ic
 inject_play_font()
 inject_sidebar_styles()
 inject_metric_styles()
-# Add Microsoft Clarity analytics
+
+# Show cookie consent banner (respects ENABLE_COOKIE_CONSENT config)
+show_cookie_banner()
+
+# Add Microsoft Clarity analytics (only if consent given)
 inject_microsoft_clarity()
 
 # Define pages with custom titles

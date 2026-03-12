@@ -133,6 +133,13 @@ def inject_play_font() -> None:
     if not USE_CUSTOM_FONT:
         return  # Use Streamlit's default font
     
+    # Add preload links to improve font loading performance and avoid warnings
+    preload_html = f'''
+    <link rel="preload" href="{CUSTOM_FONT_PATHS["regular"]}" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="{CUSTOM_FONT_PATHS["bold"]}" as="font" type="font/ttf" crossorigin="anonymous">
+    '''
+    st.markdown(preload_html, unsafe_allow_html=True)
+    
     font_css = f'''
     @font-face {{
         font-family: '{CUSTOM_FONT_NAME}';

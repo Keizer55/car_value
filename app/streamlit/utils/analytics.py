@@ -42,7 +42,19 @@ def inject_microsoft_clarity(project_id: str | None = None) -> None:
     - `project_id` argument
     - Streamlit secrets key `CLARITY_PROJECT_ID`
     - Environment variable `CLARITY_PROJECT_ID`
+    
+    Note: Can be disabled via config.ENABLE_ANALYTICS to reduce browser console warnings.
+    Respects cookie consent if ENABLE_COOKIE_CONSENT is True.
     """
+    from .config import ENABLE_ANALYTICS
+    from .cookie_consent import should_load_analytics
+    
+    if not ENABLE_ANALYTICS:
+        return
+    
+    # Check cookie consent status
+    if not should_load_analytics():
+        return
 
     project_id = project_id or _get_clarity_project_id()
     if not project_id:

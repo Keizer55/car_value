@@ -24,3 +24,7 @@ CUSTOM_FONT_PATHS = {
     "regular": "app/streamlit/assets/fonts/futuristic_1/Play-Regular.ttf",
     "bold": "app/streamlit/assets/fonts/futuristic_1/Play-Bold.ttf"
 }
+
+# Analytics configuration
+ENABLE_ANALYTICS = True  # Set to False to disable Microsoft Clarity (reduces console warnings)
+ENABLE_COOKIE_CONSENT = True  # Set to False to disable cookie consent banner (auto-accepts analytics)

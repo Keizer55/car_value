@@ -68,7 +68,9 @@ app/streamlit/
 │   ├── ui_components.py     # UI rendering components (tables, filters, buttons)
 │   ├── ui_theme.py          # Theme and styling utilities
 │   ├── prediction_logic.py  # Business logic and validations
+│   ├── analytics.py         # Microsoft Clarity integration
 │   └── chart_renderers.py   # High-level chart rendering
+│   └── cookie_consent.py    # Cookie consent banner (GDPR/CCPA compliance)
 ├── assets/
 │   ├── fonts/               # Custom fonts for UI
 │   │   ├── futuristic_1/   # Play font family
@@ -123,4 +125,35 @@ In your Coolify application settings:
 - Redeploy the app
 
 If `CLARITY_PROJECT_ID` is not set, Clarity tracking is disabled.
+
+### Cookie Consent
+
+The app includes a **cookie consent banner** to comply with GDPR/CCPA regulations.
+
+**Configuration** (in `config.py`):
+- `ENABLE_COOKIE_CONSENT = True` (default): Shows consent banner, only loads analytics if user accepts
+- `ENABLE_COOKIE_CONSENT = False`: No consent banner, analytics loads automatically
+
+**User Experience:**
+- Banner appears at bottom of page on first visit
+- User can Accept or Decline cookies
+- Choice applies for the session (stored in `st.session_state`)
+- Analytics (Clarity) only loads if user accepts
+
+**Implementation:**
+- Consent logic: `utils/cookie_consent.py`
+- Banner styling: Non-intrusive, fixed bottom position
+- Privacy link: Points to Microsoft's privacy statement
+
+## Browser Console Warnings
+
+You may see Feature Policy warnings in the browser's developer console. These are **normal and safe**. 
+
+See [BROWSER_WARNINGS.md](./BROWSER_WARNINGS.md) for a detailed explanation of why these warnings appear and which ones can be addressed.
+
+**Quick Summary:**
+- ✅ These are informational browser security messages
+- ✅ They don't affect functionality or end users
+- ✅ Font preload warning has been fixed
+- ℹ️ Set `ENABLE_ANALYTICS = False` in `config.py` to reduce some warnings (disables Clarity)
 
