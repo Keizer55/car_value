@@ -128,21 +128,23 @@ If `CLARITY_PROJECT_ID` is not set, Clarity tracking is disabled.
 
 ### Cookie Consent
 
-The app includes a **cookie consent banner** to comply with GDPR/CCPA regulations.
+The app includes a **cookie consent modal popup** to comply with GDPR/CCPA regulations.
 
 **Configuration** (in `config.py`):
-- `ENABLE_COOKIE_CONSENT = True` (default): Shows consent banner, only loads analytics if user accepts
-- `ENABLE_COOKIE_CONSENT = False`: No consent banner, analytics loads automatically
+- `ENABLE_COOKIE_CONSENT = True` (default): Shows consent modal, only loads analytics if user accepts
+- `ENABLE_COOKIE_CONSENT = False`: No consent modal, analytics loads automatically
 
 **User Experience:**
-- Banner appears at bottom of page on first visit
+- Modal popup appears centered on screen on first visit
+- Full-screen overlay with backdrop blur
 - User can Accept or Decline cookies
 - Choice applies for the session (stored in `st.session_state`)
 - Analytics (Clarity) only loads if user accepts
+- Smooth animations and modern UI
 
 **Implementation:**
 - Consent logic: `utils/cookie_consent.py`
-- Banner styling: Non-intrusive, fixed bottom position
+- Modal styling: Centered card with gradient background
 - Privacy link: Points to Microsoft's privacy statement
 
 ## Browser Console Warnings
@@ -156,4 +158,8 @@ See [BROWSER_WARNINGS.md](./BROWSER_WARNINGS.md) for a detailed explanation of w
 - ✅ They don't affect functionality or end users
 - ✅ Font preload warning has been fixed
 - ℹ️ Set `ENABLE_ANALYTICS = False` in `config.py` to reduce some warnings (disables Clarity)
+
+### Cookie Consent
+
+When analytics is enabled, a modern modal popup appears on first visit to obtain user consent for cookies and analytics tracking (GDPR/CCPA compliance).
 

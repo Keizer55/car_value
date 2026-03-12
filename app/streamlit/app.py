@@ -10,7 +10,7 @@ inject_play_font()
 inject_sidebar_styles()
 inject_metric_styles()
 
-# Show cookie consent banner (respects ENABLE_COOKIE_CONSENT config)
+# Show cookie consent modal (respects ENABLE_COOKIE_CONSENT config)
 show_cookie_banner()
 
 # Add Microsoft Clarity analytics (only if consent given)

@@ -64,16 +64,17 @@ Only investigate if:
 
 ## Cookie Consent
 
-The app includes a cookie consent banner to comply with privacy regulations (GDPR/CCPA) when using Microsoft Clarity analytics.
+The app includes a cookie consent modal popup to comply with privacy regulations (GDPR/CCPA) when using Microsoft Clarity analytics.
 
 **Key Features:**
-- ✅ Non-intrusive bottom banner
+- ✅ Modern centered modal with backdrop overlay
 - ✅ Only shows on first visit (per session)
+- ✅ Smooth animations and professional design
 - ✅ Analytics only loads if user accepts
 - ✅ Can be disabled via `ENABLE_COOKIE_CONSENT = False` in `config.py`
 
 **Privacy Compliance:**
 - Users are informed about cookie usage
-- Clear Accept/Decline options
+- Clear Accept/Decline buttons
 - Analytics respects user choice
 - Links to Microsoft's privacy statement
