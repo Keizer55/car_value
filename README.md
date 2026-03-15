@@ -1,59 +1,73 @@
 # Car Value (Used Car Price Prediction)
+> *End-to-end pipeline to predict used car prices in Spain, from raw listings to a Streamlit app.*
 
-**🌐 Live App:** [https://car-value.zikzero.com/](https://car-value.zikzero.com/)
+[![Live App](https://img.shields.io/badge/Live%20App-car--value.zikzero.com-brightgreen?style=for-the-badge)](https://car-value.zikzero.com/)
+[![Python](https://img.shields.io/badge/Python-3.13-blue?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-Reference-blue?style=flat-square)](./LICENSE)
 
-Motivation
+---
 
-I developed this project because I was looking to buy a car in 2024 and had many questions about the best "investment":
+![Car Value Demo](./app/streamlit/assets/example.gif)
+
+---
+
+## Why I Built This
+
+I was shopping for a car in 2024 and kept asking the same questions:
 
 - Do cars depreciate heavily after the first year?
 - Do premium brands retain value better?
 - Are second-hand cars always a better deal?
-...
 
-As a data scientist I wanted to understand trends in the Spanish market. This work was carried out during 2024, a year marked by a rise in used-car prices caused by new-car shortages and semiconductor supply issues following the COVID-19 pandemic. Trends may have changed since then, so the model should be periodically re-evaluated; nonetheless, it serves as a useful reference.
+As a data scientist, I wanted to quantify the Spanish market. This project was trained on 2024 listings, a period affected by new-car shortages and supply chain issues. Prices may have shifted since, so the model should be retrained periodically.
 
-I collected over 15,000 listings across the 40 most popular models in the Spanish market.
+**Dataset size:** 15,000+ listings across 40 popular models.
 
 **Last model trained:** February 2026 (see `models/2026-02-03/auto_ml_sklearn.pkl`).
 
-End-to-end project to process used-car listings, build a structured dataset, train an AutoML regression model, and serve price predictions via a Streamlit app.
+---
 
-This repo is organized as a pipeline:
+## Project Overview
+
+Pipeline flow:
 
 1) **Process data** from raw listings into `data/processed/` (pickled DataFrame)
 2) **Train** a model (notebooks / AutoML) and save artifacts to `models/<date>/`
 3) **Predict** via `src/inference/predict.py`
-4) **Serve UI** with Streamlit (`app/streamlit/app.py`), separating frontend code from backend logic (`src/`)
+4) **Serve UI** with Streamlit (`app/streamlit/app.py`), separating frontend from backend (`src/`)
 
-## Project structure
+---
 
-This project adheres to a clean separation of concerns:
+## Project Structure
 
-- `src/` — Contains the core business logic, reusable across notebooks, scripts, and the app.
-    - `scraping/`: Web scraping scripts (git-ignored, not included in the repository).
-    - `features/`: Data cleaning and processing code.
-    - `inference/`: Prediction logic and model loading.
-- `app/` — Contains the frontend/presentation layer.
-    - `streamlit/`: The Streamlit dashboard code.
-- `data/` — Data storage (training dataset not included in the repo).
-- `models/<date>/` — Serialized model artifacts (current default path in inference)
-- `notebooks/` — Jupyter notebooks for exploration and training.
-- `config/` — Configuration files for scraping (git-ignored, not included in the repository).
+- `src/` — core business logic used by notebooks, scripts, and the app.
+    - `scraping/`: scraping scripts (git-ignored, not included).
+    - `features/`: dataset building and preprocessing.
+    - `inference/`: model loading and prediction helpers.
+- `app/` — frontend/presentation layer.
+    - `streamlit/`: the Streamlit dashboard.
+- `data/` — storage (training dataset not included).
+- `models/<date>/` — versioned model artifacts.
+- `notebooks/` — training and exploration notebooks.
+- `config/` — scraping configuration (git-ignored, not included).
 
 Key paths:
 
-- `src/features/build_dataset.py` — processes data and writes `data/processed/df_auto.pkl`
-- `src/inference/predict.py` — loads a persisted model and runs `model.predict(...)`
-- `models/` — versioned model artifacts (current default path in inference)
-- `app/streamlit/app.py` — Streamlit UI entry point (imports logic from `src`)
+- `src/features/build_dataset.py` — builds `data/processed/df_auto.pkl`.
+- `src/inference/predict.py` — loads a model and runs `predict(...)`.
+- `app/streamlit/app.py` — Streamlit entry point.
+
+---
 
 ## Environment
 
-- **Run the app / inference**: use `requirements-venv_app.txt` (recommended Python: **3.13.x**).
+- **Run the app / inference**: `requirements-venv_app.txt` (recommended Python **3.13.x**).
 - **Optional (older experiments)**: PyCaret notebooks use `requirements-venv_auto_ml_pycaret.txt` (Python **3.11.x**).
 
-## Quickstart: run the Streamlit app
+---
+
+## Quick Start (Streamlit)
 
 From the repo root:
 
@@ -65,7 +79,7 @@ python -m pip install -r requirements-venv_app.txt
 streamlit run app/streamlit/app.py
 ```
 
-If PowerShell script execution is restricted:
+If PowerShell execution is restricted:
 
 ```powershell
 cmd /c ".\venv_app\Scripts\activate.bat"
@@ -76,15 +90,19 @@ Notes:
 - Run `streamlit` from the repo root so imports under `src/` resolve.
 - The app uses the inference helper in `src/inference/predict.py`.
 
-## What’s included
+---
 
-- ✅ Streamlit app code under `app/streamlit/`
-- ✅ Pretrained model artifact: `models/2026-02-03/auto_ml_sklearn.pkl` (used by default for the app)
-- ✅ Reduced UI artifact for filter options: `data/processed/df_auto_filters.pkl`
-- ❌ Full training dataset + raw scraped HTML listings (not included)
-- ❌ Scraping configuration under `config/` (not included)
+## What’s Included
 
-## Model artifact
+- ✅ Streamlit app under `app/streamlit/`
+- ✅ Pretrained model: `models/2026-02-03/auto_ml_sklearn.pkl` (default for app)
+- ✅ UI filter artifact: `data/processed/df_auto_filters.pkl`
+- ❌ Full training dataset + raw HTML listings (not included)
+- ❌ Scraping config under `config/` (not included)
+
+---
+
+## Model Artifact
 
 Inference defaults to:
 - `models/2026-02-03/auto_ml_sklearn.pkl`
@@ -95,10 +113,11 @@ If you save a newer model, either:
 - update `DEFAULT_MODEL_PATH` in `src/inference/predict.py`, or
 - pass `model_path=...` when calling `predict(...)`.
 
+---
 
-## Optional: rebuild data + retrain
+## Optional: Rebuild Data + Retrain
 
-If you have the raw HTML files locally (e.g. under `data/raw/`), you can rebuild the processed dataset:
+If you have raw HTML locally (e.g. under `data/raw/`), rebuild the dataset:
 
 ```powershell
 # Activate venv_app environment
@@ -109,25 +128,30 @@ python -m src.features.build_dataset
 ```
 
 Then run the main training notebook: `notebooks/auto_ml_sklearn.ipynb`.
-## Programmatic inference
 
-You can call the predictor from Python:
+---
+
+## Programmatic Inference
 
 ```python
 from src.inference.predict import predict
 
 payload = {
-    # must match the feature columns expected by your trained model
+        # Must match feature columns expected by the trained model
 }
 
 yhat = predict(payload)
 print(yhat)
 ```
 
+---
+
 ## Troubleshooting
 
 - **Model not found**: ensure `models/2026-02-03/auto_ml_sklearn.pkl` exists (or adjust `MODEL_PATH`).
 - **PowerShell activation blocked**: use `cmd /c ".\venv_app\Scripts\activate.bat"`.
+
+---
 
 ## License
 
