@@ -75,7 +75,7 @@ In the current analysis, all cars within the same model line are treated as homo
     "",
 )
 
-image_path = BASE_DIR / "docs" / "Gemini_Generated_Image_2d61s62d61s62d61.png"
+image_path = BASE_DIR / "docs" / "golf_gen1_4_6_8.png"
 if image_path.exists():
     st.image(str(image_path), width="stretch")
 else:
