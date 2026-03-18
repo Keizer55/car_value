@@ -63,12 +63,12 @@ def show_cookie_consent_dialog() -> None:
         st.write("")  # type: ignore[attr-defined] - Spacer
     
     with col2:
-        if st.button("✓ Accept Cookies", type="primary", use_container_width=True):  # type: ignore[attr-defined]
+        if st.button("✓ Accept Cookies", type="primary", width="stretch"):  # type: ignore[attr-defined]
             set_consent_status(True)
             st.rerun()  # type: ignore[attr-defined]
     
     with col3:
-        if st.button("✗ Decline", use_container_width=True):  # type: ignore[attr-defined]
+        if st.button("✗ Decline", width="stretch"):  # type: ignore[attr-defined]
             set_consent_status(False)
             st.rerun()  # type: ignore[attr-defined]
 

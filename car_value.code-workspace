@@ -4,5 +4,7 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"python.pythonPath": "C:\\Users\\alvar\\Documents\\projects_git\\car_value\\venv_app\\Scripts\\python.exe"
+	}
 }

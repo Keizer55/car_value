@@ -19,9 +19,10 @@ inject_microsoft_clarity()
 # Define pages with custom titles
 predictor_page = st.Page("pages/predictor.py", title="🚗 Predictor 📉")
 context_page = st.Page("pages/context.py", title="💡 Project Context 📋")
+scope_page = st.Page("pages/scope_considerations.py", title="📚 Scope & Considerations 🧭")
 
 # Create navigation
-pg = st.navigation([predictor_page, context_page])
+pg = st.navigation([predictor_page, context_page, scope_page])
 
 # Run the selected page
 pg.run()
