@@ -10,7 +10,7 @@ from utils.ui_theme import footer, sidebar_heading
 def render_section(title: str, body: str, icon: str) -> None:
     """Render a consistently styled content section."""
     with st.container(border=True):
-        st.markdown(f"### {icon} {title}")
+        st.markdown(f"### {title}")
         st.markdown(body)
 
 
@@ -72,7 +72,7 @@ That means part of the observed price difference is not pure depreciation, but a
 
 In the current analysis, all cars within the same model line are treated as homogeneous, even though they may belong to different generations or facelifts.
 """,
-    "🚘",
+    "",
 )
 
 image_path = BASE_DIR / "docs" / "Gemini_Generated_Image_2d61s62d61s62d61.png"
@@ -92,7 +92,7 @@ This effect became especially relevant after the **2022 inflation spike (+8.4%)*
 
 A car bought in 2010 at 15,000 EUR would need to be around **21,600 EUR** in 2025 just to preserve equivalent purchasing power.
 """,
-    "📈",
+    "",
 )
 
 inflation_rows = [
@@ -191,7 +191,7 @@ Reasons:
 - True depreciation requires comparing current used price against original catalogue price, adjusted for inflation.
 - That original list price is not available in second-hand listing platforms.
 """,
-    "🧭",
+    "",
 )
 
 render_section(
@@ -205,7 +205,7 @@ Examples:
 - Semiconductor shortages (2021-2023) created anomalous periods in which second-hand prices spiked.
 - Regulatory shifts (such as Low Emission Zones in Spain) can suppress prices for specific engines.
 """,
-    "🕒",
+    "",
 )
 
 render_section(
@@ -223,7 +223,7 @@ This is amplified in premium brands (BMW, Mercedes, Audi, Porsche), where:
 
 As a consequence, model outputs are generally more reliable for generalist vehicles than for luxury segments.
 """,
-    "🧩",
+    "",
 )
 
 render_section(
@@ -238,7 +238,7 @@ There is also selection bias in one-day snapshots:
 
 This can cause a mild upward bias in observed prices versus actual closed-sale values.
 """,
-    "💶",
+    "",
 )
 
 footer("Methodological notes for interpretation of model outputs and market signals.")
