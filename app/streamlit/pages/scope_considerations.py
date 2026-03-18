@@ -117,36 +117,58 @@ inflation_rows = [
 
 inflation_df = pd.DataFrame(inflation_rows, columns=["Year", "Inflation", "Context"])
 
-cmap = plt.cm.RdYlGn_r
-norm = mcolors.Normalize(
-    vmin=float(inflation_df["Inflation"].min()),
-    vmax=float(inflation_df["Inflation"].max()),
-)
-bar_colors = [cmap(norm(v)) for v in inflation_df["Inflation"]]
+
+import numpy as np
+# Custom color logic: positive = red gradient, negative = green, 0 = split
+reds_cmap = plt.cm.get_cmap("Reds")
+greens_cmap = plt.cm.get_cmap("Greens")
+min_inf = inflation_df["Inflation"].min()
+max_inf = inflation_df["Inflation"].max()
+bar_colors = []
+for v in inflation_df["Inflation"]:
+    if v > 0:
+        # Normalize positive inflation to [0,1] and use lighter reds
+        norm = (v - 0) / (max_inf - 0) if max_inf != 0 else 0
+        bar_colors.append(reds_cmap(0.15 + norm * 0.4))
+    elif v < 0:
+        # Normalize negative inflation to [0,1] and use lighter greens
+        norm = (v - min_inf) / (0 - min_inf) if min_inf != 0 else 0
+        bar_colors.append(greens_cmap(0.15 + norm * 0.4))
+    else:
+        bar_colors.append("#cccccc")  # Neutral gray for zero
 
 fig, ax = plt.subplots(figsize=(12, 5))
-fig.patch.set_facecolor("#fbfcfe")
-ax.set_facecolor("#fbfcfe")
-ax.bar(inflation_df["Year"], inflation_df["Inflation"], color=bar_colors, edgecolor="#2b2b2b", linewidth=0.5)
-ax.axhline(2.0, color="#1f77b4", linestyle="--", linewidth=1.6, label="ECB target (2%)")
-ax.axhline(0, color="#4b4b4b", linewidth=1)
+fig.patch.set_facecolor("#181B23")
+ax.set_facecolor("#181B23")
+
+ax.bar(inflation_df["Year"], inflation_df["Inflation"], color=bar_colors, edgecolor="#222", linewidth=0.7)
+# Draw average inflation line
+avg_inflation = inflation_df["Inflation"].mean()
+ax.axhline(avg_inflation, color="#1f77b4", linestyle="--", linewidth=1.6, label=f"Average ({avg_inflation:.2f}%)")
+ax.axhline(0, color="#cccccc", linewidth=1)
 
 for year, value in zip(inflation_df["Year"], inflation_df["Inflation"]):
     y_offset = 0.16 if value >= 0 else -0.22
     vertical_align = "bottom" if value >= 0 else "top"
-    ax.text(year, value + y_offset, f"{value:+.1f}%", ha="center", va=vertical_align, fontsize=8)
+    ax.text(year, value + y_offset, f"{value:+.1f}%", ha="center", va=vertical_align, fontsize=9, color="white")
 
-ax.set_title("Spain CPI (2010-2025): Annual Inflation", pad=10)
-ax.set_ylabel("Annual CPI (%)")
-ax.set_xlabel("Year")
+ax.set_title("Spain CPI (2010-2025): Annual Inflation", pad=10, color="white")
+ax.set_ylabel("Annual CPI (%)", color="white")
+ax.set_xlabel("Year", color="white")
 ax.set_xticks(inflation_df["Year"])
-ax.tick_params(axis="x", rotation=45)
-ax.grid(axis="y", linestyle="--", alpha=0.28)
-ax.legend(frameon=False)
+ax.tick_params(axis="x", rotation=45, colors="white")
+ax.tick_params(axis="y", colors="white")
+ax.grid(axis="y", linestyle="--", alpha=0.18)
+ax.legend(frameon=False, labelcolor="white")
+# Set axis spine colors to white and hide top/right
+for position, spine in ax.spines.items():
+    spine.set_color('white')
+    if position in ["top", "right"]:
+        spine.set_visible(False)
 fig.tight_layout()
 
+st.caption("Color scale: lower and negative inflation in green, higher inflation in red.")
 st.pyplot(fig, width="stretch")
-
 st.caption("Color scale: lower and negative inflation in green, higher inflation in red.")
 
 with st.expander("Inflation timeline details"):
