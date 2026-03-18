@@ -15,7 +15,6 @@ def render_section(title: str, body: str, icon: str) -> None:
 
 
 st.title("Scope & Considerations")
-sidebar_heading("Methodology", "📚")
 
 st.markdown(
     """
@@ -120,8 +119,8 @@ inflation_df = pd.DataFrame(inflation_rows, columns=["Year", "Inflation", "Conte
 
 import numpy as np
 # Custom color logic: positive = red gradient, negative = green, 0 = split
-reds_cmap = plt.cm.get_cmap("Reds")
-greens_cmap = plt.cm.get_cmap("Greens")
+reds_cmap = plt.colormaps["Reds"]
+greens_cmap = plt.colormaps["Greens"]
 min_inf = inflation_df["Inflation"].min()
 max_inf = inflation_df["Inflation"].max()
 bar_colors = []

@@ -8,24 +8,53 @@ from __future__ import annotations
 
 import streamlit as st
 from typing import Optional
+import extra_streamlit_components as stx
+
+
+# We no longer cache the cookie manager. Initializing it inside a cached function
+# causes CachedWidgetWarning because it inherently uses Streamlit components/widgets.
+def get_cookie_manager():
+    # Only initialize the CookieManager once per session using session_state
+    if "cookie_manager" not in st.session_state:
+        st.session_state["cookie_manager"] = stx.CookieManager(key="cookie_manager_init")
+    return st.session_state["cookie_manager"]
 
 
 def get_consent_status() -> Optional[bool]:
-    """Get the current cookie consent status from session state.
+    """Get the current cookie consent status from browser cookies.
     
     Returns:
         True if accepted, False if declined, None if not yet decided
     """
-    return st.session_state.get("cookie_consent", None)  # type: ignore[attr-defined]
+    cookie_manager = get_cookie_manager()
+    
+    # Check if we just set it in this session to avoid waiting for frontend sync
+    if "_cookie_consent_choice" in st.session_state:
+        val = st.session_state["_cookie_consent_choice"]
+        if st.session_state.get("_cookie_consent_action_pending"):
+            cookie_manager.set("cookie_consent", val, key="set_consent", max_age=365*24*60*60)
+            st.session_state["_cookie_consent_action_pending"] = False
+        return val == "true"
+
+    status = cookie_manager.get(cookie="cookie_consent")
+    
+    # Cookie is stored as a string
+    if status == "true":
+        return True
+    elif status == "false":
+        return False
+    return None
 
 
 def set_consent_status(accepted: bool) -> None:
-    """Store cookie consent decision in session state.
+    """Queue cookie consent decision in session state. 
+    It will be persisted to browser cookies on the next render pass.
     
     Args:
         accepted: True if user accepts cookies, False if declined
     """
-    st.session_state["cookie_consent"] = accepted  # type: ignore[attr-defined]
+    st.session_state["_cookie_consent_choice"] = "true" if accepted else "false"
+    st.session_state["_cookie_consent_action_pending"] = True
 
 
 @st.dialog("🍪 Cookie Consent")  # type: ignore[misc]
@@ -53,7 +82,7 @@ def show_cookie_consent_dialog() -> None:
     
     ---
     
-    **Your choice will apply for this session.**
+    **Your choice will be saved across sessions.**
     """
     st.markdown(content)  # type: ignore[attr-defined]
     
@@ -65,12 +94,12 @@ def show_cookie_consent_dialog() -> None:
     with col2:
         if st.button("✓ Accept Cookies", type="primary", width="stretch"):  # type: ignore[attr-defined]
             set_consent_status(True)
-            st.rerun()  # type: ignore[attr-defined]
+            st.rerun()  # forces app to rerun, pick up session state, and persist cookie
     
     with col3:
         if st.button("✗ Decline", width="stretch"):  # type: ignore[attr-defined]
             set_consent_status(False)
-            st.rerun()  # type: ignore[attr-defined]
+            st.rerun()  # forces app to rerun, pick up session state, and persist cookie
 
 
 def show_cookie_banner() -> None:

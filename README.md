@@ -135,13 +135,20 @@ Then run the main training notebook: `notebooks/auto_ml_sklearn.ipynb`.
 ## Programmatic Inference
 
 ```python
+from pathlib import Path
 from src.inference.predict import predict
 
 payload = {
-        # Must match feature columns expected by the trained model
+    "km": 45000,                          # int value
+    "fuel_type": "gasolina",              # 'diesel', 'gasolina', 'hibrido', 'hibrido ench.', 'glp', 'electrico'
+    "age": 3,                             # int value
+    "brand": "volkswagen",                # 'volkswagen', 'seat', 'toyota', 'renault', ...
+    "segment": "C",                       # 'B', 'C', 'D', 'E', 'J', 'M'
+    "body_type": "Hatchback"              # 'Hatchback', 'SUV', 'Sedan', 'MPV'
 }
 
-yhat = predict(payload)
+model_path = Path("models/2026-02-03/auto_ml_sklearn.pkl")
+yhat = predict(payload, model_path=model_path)
 print(yhat)
 ```
 
