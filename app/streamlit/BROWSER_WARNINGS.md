@@ -37,25 +37,35 @@ Feature Policy: Skipping unsupported feature name "clipboard-write"
 
 ---
 
-## 2. Theme Color Warnings
+## 2. Theme Color Warnings (Version-Dependent)
 
 **What you see:**
 ```
 Invalid color passed for widgetBackgroundColor in theme.sidebar: ""
 Invalid color passed for widgetBorderColor in theme.sidebar: ""
 Invalid color passed for skeletonBackgroundColor in theme.sidebar: ""
+
+or (on newer versions):
+
+"theme.sidebar.widgetBackgroundColor" is not a valid config option
+"theme.sidebar.widgetBorderColor" is not a valid config option
+"theme.sidebar.skeletonBackgroundColor" is not a valid config option
 ```
 
 **Why they appear:**
-- Streamlit internally checks for theme properties that don't exist in the public API
-- These are optional properties with no external configuration method
+- Theme option support has changed across Streamlit versions
+- Some versions emit browser warnings for empty internal sidebar color values
+- Newer versions reject unsupported `theme.sidebar.*` keys at startup
 
-**Why you cannot fix them:**
-- These properties are not part of Streamlit's documented theme configuration
-- They're internal Streamlit framework checks
-- No user-facing configuration exists
+**How to handle them safely:**
+- Keep only officially supported config keys in `.streamlit/config.toml`
+- Do not add unsupported keys such as:
+   - `theme.sidebar.widgetBackgroundColor`
+   - `theme.sidebar.widgetBorderColor`
+   - `theme.sidebar.skeletonBackgroundColor`
+- If browser-only empty-value warnings appear, treat them as framework noise unless UI is affected
 
-**Impact:** ✅ None - Streamlit uses defaults, app displays correctly
+**Impact:** ✅ Usually none - Streamlit falls back to defaults and app displays correctly
 
 ---
 
@@ -93,8 +103,14 @@ An iframe which has both allow-scripts and allow-same-origin...
 ### ⚠️ Things You CANNOT Fix:
 
 - Feature Policy warnings (browser security - working as intended)
-- Theme color warnings (internal Streamlit checks)
+- Framework-internal empty-value warnings in some Streamlit builds
 - Most Streamlit framework messages
+
+### ✅ Theme Config Rule of Thumb
+
+- Use only documented Streamlit theme keys
+- After Streamlit upgrades, re-check startup logs for deprecated/invalid options
+- If a warning starts with `is not a valid config option`, remove that key from config
 
 ---
 
@@ -109,7 +125,7 @@ An iframe which has both allow-scripts and allow-same-origin...
 **DON'T worry about:**
 - ✅ Yellow warning messages (informational)
 - ✅ Feature Policy messages (security working correctly)
-- ✅ Theme color warnings (Streamlit internals)
+- ✅ Internal theme empty-value warnings when UI works normally
 - ✅ Messages that don't affect user experience
 
 ---
@@ -121,12 +137,13 @@ An iframe which has both allow-scripts and allow-same-origin...
 - ✅ Streamlit is properly sandboxing components
 - ✅ Your app is functioning correctly
 
-The only actionable items were:
+The most actionable items are:
 1. ✅ **FIXED**: Font preload optimization
 2. ✅ **FIXED**: Iframe implementation (now using native dialogs)
-3. ✅ **OPTIONAL**: Disable analytics to reduce some warnings
+3. ✅ **KEEP UPDATED**: Remove invalid Streamlit config keys after upgrades
+4. ✅ **OPTIONAL**: Disable analytics to reduce some warnings
 
-Everything else is framework/browser level and cannot (and should not) be "fixed."
+Most other warnings are framework/browser level and should only be acted on if user-facing behavior breaks.
 
 ## Cookie Consent
 

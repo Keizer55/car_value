@@ -6,3 +6,8 @@ textColor = "#FFFFFF"
 # Additional theme properties to avoid warnings
 font = "sans serif"
 
+[theme.sidebar]
+backgroundColor = "#262730"
+secondaryBackgroundColor = "#1D2330"
+textColor = "#FFFFFF"
+
