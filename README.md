@@ -158,7 +158,7 @@ print(yhat)
 
 - **Model not found**: ensure `models/2026-02-03/auto_ml_sklearn.pkl` exists (or adjust `MODEL_PATH`).
 - **PowerShell activation blocked**: use `cmd /c ".\venv_app\Scripts\activate.bat"`.
-- **Streamlit theme config warnings**: after upgrading Streamlit, some theme keys may become invalid. If startup logs show `is not a valid config option`, remove that key from `app/streamlit/.streamlit/config.toml` and keep only documented options.
+- **Streamlit theme config warnings**: after upgrading Streamlit, some theme keys may become invalid. If logs show `is not a valid config option`, remove that key from `app/streamlit/.streamlit/config.toml` and keep only documented options. If browser warnings repeatedly mention `theme.sidebar` invalid colors, remove the whole `[theme.sidebar]` block.
 
 ---
 
