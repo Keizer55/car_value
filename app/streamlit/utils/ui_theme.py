@@ -15,14 +15,19 @@ def inject_sidebar_styles() -> None:
     st.markdown("""
         <style>
         section[data-testid="stSidebar"] {
-            background-color: #f8f9fa !important; /* Default widget background color */
-            border-color: #dee2e6 !important; /* Default widget border color */
+            background-color: #1B1E1F !important;
+            border-color: #262730 !important;
+            color: #ffffff !important;
+        }
+        section[data-testid="stSidebar"] * {
+            color: #ffffff !important;
         }
         /* Explicitly set Filters heading and nav items to the same size so they match */
         section[data-testid="stSidebar"] h2 {
             font-size: 1.25rem !important;
             font-weight: 700 !important;
             margin-bottom: 0.5rem !important;
+            color: #ffffff !important;
         }
         /* Basic spacing for nav items; explicit size below ensures matching */
         section[data-testid="stSidebar"] ul li button,
