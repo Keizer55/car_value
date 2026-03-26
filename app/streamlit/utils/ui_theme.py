@@ -35,14 +35,23 @@ def inject_sidebar_styles() -> None:
             padding-top: 0.25rem !important;
             padding-bottom: 0.25rem !important;
             min-height: 40px !important;
+            height: auto !important;
+            white-space: normal !important;
         }
         section[data-testid="stSidebar"] ul li button span,
         section[data-testid="stSidebar"] ul li a span {
-            display: inline-flex !important;
+            display: flex !important;
+            width: 100% !important;
+            flex-wrap: wrap !important;
             align-items: center !important;
             gap: 0.4rem !important;
             font-size: 1.25rem !important;
             font-weight: 700 !important;
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+            word-break: break-word !important;
+            line-height: 1.2 !important;
         }
         </style>
     """, unsafe_allow_html=True)
