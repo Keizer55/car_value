@@ -2,6 +2,7 @@ import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
+from pathlib import Path
 
 from utils.config import BASE_DIR
 from utils.ui_theme import footer, sidebar_heading
@@ -22,17 +23,31 @@ st.markdown(
 .scope-hero {
     padding: 1rem 1.1rem;
     border-radius: 14px;
-    border: 1px solid #d9e3f0;
-    background: linear-gradient(135deg, #f5f9ff 0%, #eef5ea 100%);
+    border: 1px solid rgba(125, 201, 150, 0.26);
+    background: linear-gradient(135deg, rgba(95, 170, 120, 0.11) 0%, rgba(95, 170, 120, 0.06) 100%);
+    color: #edf7f0;
     margin-bottom: 0.75rem;
+}
+.scope-hero h3,
+.scope-hero p,
+.scope-hero b,
+.scope-hero strong,
+.scope-hero div,
+.scope-hero span {
+    color: #edf7f0 !important;
 }
 .scope-note {
     margin-top: 0.5rem;
     padding: 0.55rem 0.75rem;
-    border-left: 4px solid #2b7a78;
-    background: #f2f8f7;
+    border-left: 4px solid rgba(120, 210, 145, 0.75);
+    background: rgba(95, 170, 120, 0.08);
+    color: #edf7f0;
     border-radius: 8px;
     font-size: 0.92rem;
+}
+.scope-note,
+.scope-note * {
+    color: #edf7f0 !important;
 }
 </style>
 
@@ -75,11 +90,24 @@ In the current analysis, all cars within the same model line are treated as homo
     "",
 )
 
-image_path = BASE_DIR / "docs" / "golf_gen1_4_6_8.png"
-if image_path.exists():
+def resolve_golf_image_path() -> Path | None:
+    """Resolve the golf reference image path across local and VPS layouts."""
+    candidates = [
+        BASE_DIR / "app" / "streamlit" / "assets" / "images" / "golf_gen1_4_6_8.png",
+        BASE_DIR / "docs" / "golf_gen1_4_6_8.png",
+        Path(__file__).resolve().parents[1] / "assets" / "images" / "golf_gen1_4_6_8.png",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+image_path = resolve_golf_image_path()
+if image_path is not None:
     st.image(str(image_path), width="stretch")
 else:
-    st.info("Reference image not found in docs folder.")
+    st.info("Reference image not found. Checked app assets and docs paths.")
 
 render_section(
     "2) Inflation Is Not Accounted For (Nominal vs Real)",
