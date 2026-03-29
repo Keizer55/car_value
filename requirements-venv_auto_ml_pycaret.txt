@@ -80,7 +80,7 @@ nest-asyncio==1.6.0
 networkx==3.6.1
 numba==0.62.1
 numpy==1.26.4
-orjson==3.11.5
+orjson==3.11.6
 oyaml==1.0
 packaging==25.0
 pandas==2.1.4
