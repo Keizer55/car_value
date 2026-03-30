@@ -101,7 +101,7 @@ pycaret==3.3.2
 pycparser==2.23
 pydantic==2.12.5
 pydantic_core==2.41.5
-Pygments==2.19.2
+Pygments==2.20.0
 pynndescent==0.5.13
 pyod==2.0.6
 pyparsing==3.3.1
