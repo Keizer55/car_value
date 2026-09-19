@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./docs/branding/car-value-logo.png" alt="Car Value logo" width="160">
+</p>
+
 # Car Value (Used Car Price Prediction)
 > *End-to-end pipeline to predict used car prices in Spain, from raw listings to a Streamlit app.*
 
@@ -9,7 +13,7 @@
 
 ---
 
-![Car Value Demo](./app/streamlit/assets/example.gif)
+![Car Value demo](./docs/demo/car-value-demo.gif)
 
 ---
 
