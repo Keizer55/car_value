@@ -68,6 +68,10 @@ Key paths:
 ## Environment
 
 - **Run the app / inference**: `requirements-venv_app.txt` (recommended Python **3.13.x**).
+  It is generated from `requirements-venv_app.in`, which lists only what the app imports; edit the
+  `.in` and regenerate with `uv pip compile requirements-venv_app.in --python-version 3.13 --upgrade -o requirements-venv_app.txt`.
+  `scikit-learn` and `pandas` stay pinned to the versions the model and filter pickles were saved with.
+- **Scraping / dataset build / demo recording**: also need `beautifulsoup4`, `requests`, `pyyaml` and `playwright` (not in the app image).
 - **Optional (older experiments)**: PyCaret notebooks use `requirements-venv_auto_ml_pycaret.txt` (Python **3.11.x**).
 
 ---

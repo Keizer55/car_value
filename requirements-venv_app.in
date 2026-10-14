@@ -1,0 +1,19 @@
+# Direct dependencies of the Streamlit app and inference (app/streamlit/, src/inference/).
+# requirements-venv_app.txt is generated from this file; edit here, then regenerate:
+#   uv pip compile requirements-venv_app.in --python-version 3.13 --upgrade -o requirements-venv_app.txt
+#
+# scikit-learn and pandas are pinned exactly: the model (models/2026-02-03/auto_ml_sklearn.pkl)
+# and the filter options (data/processed/df_auto_filters.pkl) are pickles, and loading them with
+# another version can fail or change results. Upgrade them only together with a retrain.
+#
+# Not needed by the app (and not in the Docker image): the scraper, the dataset build and the demo
+# recording also use beautifulsoup4, requests, pyyaml and playwright.
+
+streamlit
+extra-streamlit-components
+scikit-learn==1.8.0
+pandas==2.3.3
+numpy
+joblib
+matplotlib
+seaborn
