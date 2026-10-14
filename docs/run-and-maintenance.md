@@ -31,8 +31,10 @@ Open http://localhost:8501
 If a new model is trained and saved under models/<new-date>/:
 
 1. Update MODEL_PATH in app/streamlit/utils/config.py
-2. Restart Streamlit app
-3. Validate sample predictions in Predictor page
+2. Update REFERENCE_VALUE in tests/test_smoke.py with the new model's prediction
+3. Run `python -m pytest`
+4. Restart Streamlit app
+5. Validate sample predictions in Predictor page
 
 ## Key files to check during maintenance
 

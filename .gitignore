@@ -83,3 +83,15 @@ clean-history-2026-02-03.ps1
 unify-commits-*.ps1
 
 car_value_antigravity.code-workspace
+
+# --- dicetamer project standard ---
+# Secrets: never in git. The documented template is.
+.env
+.env.*
+!.env.example
+app/streamlit/.streamlit/secrets.toml
+# Raw output of measurements (reproduced with the harness)
+artifacts/
+# Claude: per-machine settings
+.claude/settings.local.json
+.claude/worktrees/

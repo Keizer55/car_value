@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Edit(./.env)",
+      "Read(./.env.local)",
+      "Edit(./.env.local)",
+      "Read(./.env.production)",
+      "Edit(./.env.production)",
+      "Read(./config/api_keys.yaml)",
+      "Edit(./config/api_keys.yaml)",
+      "Read(./app/streamlit/.streamlit/secrets.toml)",
+      "Edit(./app/streamlit/.streamlit/secrets.toml)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/block_env_access.py\"",
+            "statusMessage": "Checking .env access"
+          }
+        ]
+      }
+    ]
+  }
+}

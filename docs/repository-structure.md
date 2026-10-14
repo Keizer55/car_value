@@ -4,8 +4,12 @@
 
 - README.md
   - Main project introduction and quick start
-- requirements-venv_app.txt
-  - Dependencies for app and inference runtime
+- CLAUDE.md
+  - Rules and map for coding agents
+- requirements-venv_app.in / requirements-venv_app.txt
+  - Direct dependencies of the app, and the lock compiled from them with uv
+- requirements-dev.in / requirements-dev.txt
+  - The app lock plus pytest
 - requirements-venv_auto_ml_pycaret.txt
   - Optional dependencies for older AutoML experiments
 - data/
@@ -19,7 +23,11 @@
 - app/streamlit/
   - Frontend application
 - docs/
-  - Human-readable documentation
+  - Human-readable documentation (index in docs/README.md)
+- tests/
+  - Smoke tests: reference prediction from the pickled model, every page runs
+- .claude/
+  - Claude Code settings: .env protection, /security-review, preview launch config
 
 ## app/streamlit/
 

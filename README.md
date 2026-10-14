@@ -15,6 +15,9 @@
 
 ![Car Value demo](./docs/demo/car-value-demo.gif)
 
+**Status:** deployed at car-value.zikzero.com; model trained 2026-02-03 on 2024 listings. Details and
+what comes next in [docs/status.md](./docs/status.md).
+
 ---
 
 ## Why I Built This
@@ -47,7 +50,7 @@ Pipeline flow:
 ## Project Structure
 
 - `src/` — core business logic used by notebooks, scripts, and the app.
-    - `scraping/`: scraping scripts (git-ignored, not included).
+    - `scraping/`: scraping scripts (included; their `config/` with the Zyte key is git-ignored).
     - `features/`: dataset building and preprocessing.
     - `inference/`: model loading and prediction helpers.
 - `app/` — frontend/presentation layer.
@@ -56,6 +59,8 @@ Pipeline flow:
 - `models/<date>/` — versioned model artifacts.
 - `notebooks/` — training and exploration notebooks.
 - `config/` — scraping configuration (git-ignored, not included).
+- `tests/` — smoke tests: the pickled model still answers as before, and every page runs.
+- `docs/` — project documentation; start at [docs/README.md](./docs/README.md).
 
 Key paths:
 
@@ -118,9 +123,9 @@ Inference defaults to:
 
 See `MODEL_PATH` in `app/streamlit/utils/config.py`.
 
-If you save a newer model, either:
-- update `DEFAULT_MODEL_PATH` in `src/inference/predict.py`, or
-- pass `model_path=...` when calling `predict(...)`.
+If you save a newer model, put it in a new `models/<date>/` folder, point `MODEL_PATH` in
+`app/streamlit/utils/config.py` to it, and update the reference value in `tests/test_smoke.py`.
+`predict(...)` always takes an explicit `model_path=...`.
 
 ---
 
@@ -167,6 +172,26 @@ print(yhat)
 - **Model not found**: ensure `models/2026-02-03/auto_ml_sklearn.pkl` exists (or adjust `MODEL_PATH`).
 - **PowerShell activation blocked**: use `cmd /c ".\venv_app\Scripts\activate.bat"`.
 - **Streamlit theme config warnings**: after upgrading Streamlit, some theme keys may become invalid. If logs show `is not a valid config option`, remove that key from `app/streamlit/.streamlit/config.toml` and keep only documented options. If browser warnings repeatedly mention `theme.sidebar` invalid colors, remove the whole `[theme.sidebar]` block.
+
+---
+
+## Tests
+
+```powershell
+python -m pip install -r requirements-dev.txt
+python -m pytest
+```
+
+They load the pickled model and check a reference prediction, then run every page headless with
+Streamlit's `AppTest`. Run them after any dependency change.
+
+---
+
+## Documentation
+
+The index, with when to read each document, is in [docs/README.md](./docs/README.md). Decisions and
+their reasons: [docs/decisions.md](./docs/decisions.md). Deploying: [docs/deploy.md](./docs/deploy.md).
+`CLAUDE.md` is the same ground for coding agents.
 
 ---
 

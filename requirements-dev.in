@@ -1,0 +1,6 @@
+# Development extras on top of the app. Regenerate with:
+#   uv pip compile requirements-dev.in --python-version 3.13 --upgrade -o requirements-dev.txt
+# The constraint keeps every shared package at the version the app lock pins.
+-c requirements-venv_app.txt
+-r requirements-venv_app.in
+pytest

@@ -37,3 +37,12 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Secrets and local tooling (never in the image)
+.env
+.env.*
+**/.streamlit/secrets.toml
+config/
+.claude/
+tests/
+docs/
