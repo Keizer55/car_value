@@ -18,9 +18,10 @@ import json
 import re
 import sys
 
-# `.env` seguido de algo que no sea punto ni alfanumerico, o fin de cadena.
-# Asi `.env.example` y `.envrc` no coinciden.
-ENV_PATTERN = re.compile(r"\.env([^.a-zA-Z0-9]|$)")
+# `.env` no seguido de letra o cifra (descarta `.envrc`), salvo que sea exactamente
+# `.env.example`. Hasta 2026-10-24 el patron exigia que no siguiera un punto, y por
+# eso dejaba pasar `.env.local` y `.env.production` (auditoria de light-cad, V2).
+ENV_PATTERN = re.compile(r"\.env(?!\.example(?![a-zA-Z0-9.]))(?![a-zA-Z0-9])")
 
 REASON = (
     "Acceso a .env bloqueado por la politica del proyecto (.claude/settings.json). "
